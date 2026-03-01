@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Page 1</title>
+<style>
+       body { font-family: Arial, sans-serif; margin: 40px; }
+       input, button { padding: 10px; margin: 8px 0; font-size: 16px; width: 300px; }
+       input[readonly] { background-color: #f0f0f0; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<h1>Client Registration Form</h1>
+<form id="form1">
+<label>First Name: <input type="text" id="first_name" required></label><br>
+<label>Last Name: <input type="text" id="last_name" required></label><br>
+<label>Full Name (auto-filled - read only): <input type="text" id="full_name" readonly></label><br><br>
+<button type="submit">Submit</button>
+</form>
+<script>
+       // Record the exact moment the page loads (for time calculation)
+       const loadTime = Date.now();
+       // Real-time autofill as user types (exactly as in the example)
+       function updateFullName() {
+           const first = document.getElementById('first_name').value.trim();
+           const last = document.getElementById('last_name').value.trim();
+           document.getElementById('full_name').value = `${first} ${last}`.trim();
+       }
+       document.getElementById('first_name').addEventListener('input', updateFullName);
+       document.getElementById('last_name').addEventListener('input', updateFullName);
+       // Handle submit → pass data to page 2
+       document.getElementById('form1').addEventListener('submit', function(e) {
+           e.preventDefault();
+           const first = document.getElementById('first_name').value.trim();
+           const last = document.getElementById('last_name').value.trim();
+           if (!first || !last) {
+               alert("Please enter both first and last name.");
+               return;
+           }
+           // Calculate minutes spent (load to submit) and round to nearest minute
+           const minutesSpent = Math.round((Date.now() - loadTime) / 60000);
+           const params = new URLSearchParams({
+               first_name: first,
+               last_name: last,
+               full_name: `${first} ${last}`.trim(),
+               time_spent: minutesSpent
+           });
+           // Load page 2 with all data
+           window.location.href = `clientpage2.html?${params.toString()}`;
+       });
+</script>
+</body>
+</html>
