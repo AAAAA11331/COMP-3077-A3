@@ -21,12 +21,12 @@
        let greeting = "Good morning";
        if (hour >= 19) greeting = "Good evening";
        else if (hour >= 12) greeting = "Good afternoon";
-       // Get previous page filename dynamically (never hardcoded)
+       // Get previous page filename dynamically
        let referrerFile = "clientpage1.html";
        if (document.referrer) {
            referrerFile = document.referrer.split('/').pop() || "clientpage1.html";
        }
-       // Build the exact message required
+       // Display required message
        document.getElementById('content').innerHTML = `
 <h1>${greeting} ${fullName},</h1>
 <p>you were referred to us from "<strong>${referrerFile}</strong>".</p>
