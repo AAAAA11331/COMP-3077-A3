@@ -21,8 +21,9 @@
 <script>
        // Record the exact moment the page loads (for time calculation)
        const loadTime = Date.now();
-       // Real-time autofill as user types (exactly as in the example)
+       // Real-time autofill as user types
        function updateFullName() {
+              // Trim user input, remove any unnecessary space
            const first = document.getElementById('first_name').value.trim();
            const last = document.getElementById('last_name').value.trim();
            document.getElementById('full_name').value = `${first} ${last}`.trim();
@@ -32,8 +33,10 @@
        // Handle submit → pass data to page 2
        document.getElementById('form1').addEventListener('submit', function(e) {
            e.preventDefault();
+              // Trim user input, remove any unnecessary space
            const first = document.getElementById('first_name').value.trim();
            const last = document.getElementById('last_name').value.trim();
+              // Check and make sure both input box were being filled
            if (!first || !last) {
                alert("Please enter both first and last name.");
                return;
