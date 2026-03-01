@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome</title>
+<style>
+       body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+       .message { max-width: 700px; padding: 30px; background: #f0f8ff; border-left: 6px solid #0066cc; }
+</style>
+</head>
+<body>
+<div class="message" id="content"></div>
+<script>
+       // Get data passed from page 1
+       const params = new URLSearchParams(window.location.search);
+       const fullName = params.get('full_name') || 'Client';
+       const minutes = params.get('time_spent') || '0';
+       // Dynamic greeting based on client's current time
+       const hour = new Date().getHours();
+       let greeting = "Good morning";
+       if (hour >= 19) greeting = "Good evening";
+       else if (hour >= 12) greeting = "Good afternoon";
+       // Get previous page filename dynamically (never hardcoded)
+       let referrerFile = "clientpage1.html";
+       if (document.referrer) {
+           referrerFile = document.referrer.split('/').pop() || "clientpage1.html";
+       }
+       // Build the exact message required
+       document.getElementById('content').innerHTML = `
+<h1>${greeting} ${fullName},</h1>
+<p>you were referred to us from "<strong>${referrerFile}</strong>".</p>
+<p>The total time you spent on the form, from load time to submit time is <strong>"${minutes} minutes"</strong> (rounded to the nearest minute).</p>
+       `;
+</script>
+</body>
+</html>
